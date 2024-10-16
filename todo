@@ -1,3 +1,5 @@
+#!/usr/bin/env lua
+
 function addItem(item)
     local file = io.open("todos", "a")
     local itemToAdd = string.format("%s\n", item)
