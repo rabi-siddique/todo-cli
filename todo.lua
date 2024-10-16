@@ -39,7 +39,7 @@ end
 
 function main()
     local command = arg[1]
-    local item = arg[2]
+    local item = table.concat(arg, " ", 2)
 
     if command == "add" then
         addItem(item)
