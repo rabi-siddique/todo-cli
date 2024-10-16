@@ -15,17 +15,26 @@ function removeItem(item)
             table.insert(linesTable, line)
         end
     end
-
     file:close()
 
     file = io.open("todos", "w")
-
     for _, line in ipairs(linesTable) do
         local itemToAdd = string.format("%s\n", line)
         file:write(itemToAdd)
     end
-
     file:close()
 
 end
 
+function showItems()
+    local file = io.open("todos", "r")
+    local lines = file:lines()
+
+    for line in lines do
+        print(line)
+    end
+    
+    file:close()
+end
+
+showItems()
