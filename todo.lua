@@ -33,8 +33,23 @@ function showItems()
     for line in lines do
         print(line)
     end
-    
+
     file:close()
 end
 
-showItems()
+function main()
+    local command = arg[1]
+    local item = arg[2]
+
+    if command == "add" then
+        addItem(item)
+    elseif command == "remove" then
+        removeItem(item)
+    elseif command == "show" then
+        showItems()
+    else
+        print("Invalid command. Use 'add', 'remove', or 'show'.")
+    end
+end
+
+main()
