@@ -65,7 +65,7 @@ function showItems()
     local lines = file:lines()
 
     for line in lines do
-        print(line)
+        print("- "..line)
     end
 
     file:close()
