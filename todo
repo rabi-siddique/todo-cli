@@ -30,13 +30,17 @@ end
 
 function showItems()
     local file = io.open("todos", "r")
-    local lines = file:lines()
+    if file ~= nil then
+        local lines = file:lines()
 
-    for line in lines do
-        print(line)
+        for line in lines do
+            print(line)
+        end
+
+        file:close()
+    else
+        print("No Todo Items")
     end
-
-    file:close()
 end
 
 function main()
