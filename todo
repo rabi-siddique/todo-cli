@@ -2,7 +2,14 @@
 
 homeDir = os.getenv("HOME")
 
-os.execute("mkdir -p " .. homeDir .. "/.todos")
+result = os.execute("mkdir -p " .. homeDir .. "/.todos")
+
+if result == true then
+    print("Directory created or already exists: " .. homeDir .. "/.todos")
+else
+    print("Error creating directory: " .. homeDir .. "/.todos")
+end
+
 filePath = homeDir .. "/.todos/todos"
 
 function addItem(item)
@@ -16,6 +23,7 @@ function addItem(item)
     local itemToAdd = string.format("%s\n", item)
     file:write(itemToAdd)
     file:close()
+    print("Todo Added Successfully!")
 end
 
 function removeItem(item)
@@ -54,8 +62,11 @@ end
 function showItems()
     local file, error = io.open(filePath, "r")
 
-    if error then
-        print("ERROR:", error)
+    if not file then
+        print("No Todo Items")
+        if error then
+            print("ERROR:", error)
+        end
         return
     end
 
