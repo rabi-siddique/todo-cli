@@ -1,17 +1,6 @@
 #!/usr/bin/env lua
 
-homeDir = os.getenv("HOME")
-
-result = os.execute("mkdir -p " .. homeDir .. "/.todos")
-
-if result == true then
-    print("Directory created or already exists: " .. homeDir .. "/.todos")
-else
-    print("Error creating directory: " .. homeDir .. "/.todos")
-end
-
-filePath = homeDir .. "/.todos/todos"
-
+verbose = false
 function addItem(item)
     local file, error = io.open(filePath, "a")
 
@@ -56,6 +45,7 @@ function removeItem(item)
         file:write(itemToAdd)
     end
     file:close()
+    print("Todo Removed Successfully")
 
 end
 
@@ -64,7 +54,7 @@ function showItems()
 
     if not file then
         print("No Todo Items")
-        if error then
+        if error and verbose then
             print("ERROR:", error)
         end
         return
@@ -82,7 +72,26 @@ end
 
 function main()
     local command = arg[1]
-    local item = table.concat(arg, " ", 2)
+    local item = arg[2]
+
+    for _, value in ipairs(arg) do
+        if value == '--verbose' then
+            verbose = true
+        end
+    end
+
+    homeDir = os.getenv("HOME")
+    result = os.execute("mkdir -p " .. homeDir .. "/.todos")
+
+    if verbose then
+        if result == true then
+            print("Directory created or already exists: " .. homeDir .. "/.todos")
+        else
+            print("Error creating directory: " .. homeDir .. "/.todos")
+        end
+    end
+
+    filePath = homeDir .. "/.todos/todos"
 
     if command == "add" then
         addItem(item)
