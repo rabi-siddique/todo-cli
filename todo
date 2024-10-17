@@ -1,14 +1,31 @@
 #!/usr/bin/env lua
 
+homeDir = os.getenv("HOME")
+
+os.execute("mkdir -p " .. homeDir .. "/.todos")
+filePath = homeDir .. "/.todos/todos"
+
 function addItem(item)
-    local file = io.open("todos", "a")
+    local file, error = io.open(filePath, "a")
+
+    if error then
+        print("ERROR:", error)
+        return
+    end
+
     local itemToAdd = string.format("%s\n", item)
     file:write(itemToAdd)
     file:close()
 end
 
 function removeItem(item)
-    local file = io.open("todos", "r")
+    local file, error = io.open(filePath, "r")
+
+    if error then
+        print("ERROR:", error)
+        return
+    end
+
     local lines = file:lines()
     local linesTable = {}
 
@@ -19,7 +36,13 @@ function removeItem(item)
     end
     file:close()
 
-    file = io.open("todos", "w")
+    file, error = io.open(filePath, "w")
+
+    if error then
+        print("ERROR:", error)
+        return
+    end
+
     for _, line in ipairs(linesTable) do
         local itemToAdd = string.format("%s\n", line)
         file:write(itemToAdd)
@@ -29,18 +52,21 @@ function removeItem(item)
 end
 
 function showItems()
-    local file = io.open("todos", "r")
-    if file ~= nil then
-        local lines = file:lines()
+    local file, error = io.open(filePath, "r")
 
-        for line in lines do
-            print(line)
-        end
-
-        file:close()
-    else
-        print("No Todo Items")
+    if error then
+        print("ERROR:", error)
+        return
     end
+
+    local lines = file:lines()
+
+    for line in lines do
+        print(line)
+    end
+
+    file:close()
+
 end
 
 function main()
