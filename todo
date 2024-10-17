@@ -1,6 +1,8 @@
 #!/usr/bin/env lua
 
 verbose = false
+homeDir = os.getenv("HOME")
+filePath = homeDir .. "/.todos/todos"
 function addItem(item)
     local file, error = io.open(filePath, "a")
 
@@ -80,7 +82,6 @@ function main()
         end
     end
 
-    homeDir = os.getenv("HOME")
     result = os.execute("mkdir -p " .. homeDir .. "/.todos")
 
     if verbose then
@@ -90,8 +91,6 @@ function main()
             print("Error creating directory: " .. homeDir .. "/.todos")
         end
     end
-
-    filePath = homeDir .. "/.todos/todos"
 
     if command == "add" then
         addItem(item)
