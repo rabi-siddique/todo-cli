@@ -90,12 +90,8 @@ function main()
 
     result = os.execute("mkdir -p " .. homeDir .. "/.todos")
 
-    if verbose then
-        if result == true then
-            print("Directory created or already exists: " .. homeDir .. "/.todos")
-        else
-            print("Error creating directory: " .. homeDir .. "/.todos")
-        end
+    if result ~= true then
+        print("Error creating directory: " .. homeDir .. "/.todos")
     end
 
     if command == "add" then
