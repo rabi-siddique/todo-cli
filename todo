@@ -1,5 +1,8 @@
 #!/usr/bin/env lua
 
+local currentDir = debug.getinfo(1).source:match("@?(.*/)")
+package.path = package.path .. ";" .. currentDir .. "?.lua"
+
 local utils = require("utils")
 local verbose = false
 local category = 'None'
