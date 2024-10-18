@@ -62,6 +62,33 @@ function removeItem(deleteId)
 
 end
 
+function showByCategory(fileLines)
+    for line in fileLines do
+        local itemId, item, itemCategory = table.unpack(utils.split(line, ","))
+
+        if itemCategory == category then
+            if verbose then
+                print(string.format("- ID:%s\t Item:%s\t Category:%s", itemId, item, itemCategory))
+            else
+                print("- " .. item)
+            end
+        end
+
+    end
+end
+
+function showAll(fileLines)
+    for line in fileLines do
+        local itemId, item, itemCategory = table.unpack(utils.split(line, ","))
+
+        if verbose then
+            print(string.format("- ID:%s\t Item:%s\t Category:%s", itemId, item, itemCategory))
+        else
+            print("- " .. item)
+        end
+
+    end
+end
 function showItems()
     local file, error = io.open(filePath, "r")
 
@@ -75,8 +102,10 @@ function showItems()
 
     local lines = file:lines()
 
-    for line in lines do
-        print("- " .. line)
+    if category == 'None' then
+        showAll(lines)
+    else
+        showByCategory(lines)
     end
 
     file:close()
