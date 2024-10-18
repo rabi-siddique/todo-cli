@@ -1,9 +1,10 @@
 #!/usr/bin/env lua
 
+local utils = require("utils")
 local verbose = false
-local category = nil
+local category = 'None'
 local homeDir = os.getenv("HOME")
-local filePath = homeDir .. "/.todos/todos"
+local filePath = homeDir .. "/.todos/todos.csv"
 
 function addItem(item)
     local file, error = io.open(filePath, "a")
@@ -13,7 +14,8 @@ function addItem(item)
         return
     end
 
-    local itemToAdd = string.format("%s\n", item)
+    local itemID = tostring(os.time())
+    local itemToAdd = string.format("%s,%s,%s\n", itemID, item, category)
     file:write(itemToAdd)
     file:close()
 
@@ -24,7 +26,7 @@ function addItem(item)
     print("Todo Added Successfully!")
 end
 
-function removeItem(item)
+function removeItem(deleteId)
     local file, error = io.open(filePath, "r")
 
     if error then
@@ -36,7 +38,9 @@ function removeItem(item)
     local linesTable = {}
 
     for line in lines do
-        if line ~= item then
+        local lineSplitTable = utils.split(line, ",")
+        local itemId, _, _ = table.unpack(lineSplitTable)
+        if itemId ~= deleteId then
             table.insert(linesTable, line)
         end
     end
