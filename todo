@@ -3,6 +3,7 @@
 local currentDir = debug.getinfo(1).source:match("@?(.*/)")
 package.path = package.path .. ";" .. currentDir .. "?.lua"
 
+local show = require("showItems")
 local utils = require("utils")
 local verbose = false
 local category = 'None'
@@ -65,56 +66,6 @@ function removeItem(deleteId)
 
 end
 
-function showByCategory(fileLines)
-    for line in fileLines do
-        local itemId, item, itemCategory = table.unpack(utils.split(line, ","))
-
-        if itemCategory == category then
-            if verbose then
-                print(string.format("- ID:%s\t Item:%s\t Category:%s", itemId, item, itemCategory))
-            else
-                print("- " .. item)
-            end
-        end
-
-    end
-end
-
-function showAll(fileLines)
-    for line in fileLines do
-        local itemId, item, itemCategory = table.unpack(utils.split(line, ","))
-
-        if verbose then
-            print(string.format("- ID:%s\t Item:%s\t Category:%s", itemId, item, itemCategory))
-        else
-            print("- " .. item)
-        end
-
-    end
-end
-function showItems()
-    local file, error = io.open(filePath, "r")
-
-    if not file then
-        print("No Todo Items")
-        if error and verbose then
-            print("ERROR:", error)
-        end
-        return
-    end
-
-    local lines = file:lines()
-
-    if category == 'None' then
-        showAll(lines)
-    else
-        showByCategory(lines)
-    end
-
-    file:close()
-
-end
-
 function main()
     local command = arg[1]
     local item = arg[2]
@@ -144,7 +95,7 @@ function main()
     elseif command == "remove" then
         removeItem(item)
     elseif command == "show" then
-        showItems()
+        show.showItems(filePath, verbose, category)
     else
         print("Invalid command. Use 'add', 'remove', or 'show'.")
     end
