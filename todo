@@ -1,6 +1,14 @@
 #!/usr/bin/env lua
 
 local currentDir = debug.getinfo(1).source:match("@?(.*/)")
+-- Ensure Lua always looks for modules in the current directory where 
+-- the executable is located, regardless of where the script is run. 
+-- If the script is executed from a different directory, Lua may not find 
+-- the required modules because it prioritizes searching in the current 
+-- working directory and predefined paths. 
+-- By default, Lua doesn't automatically search in the directory where the script 
+-- or executable resides. To ensure Lua can find the necessary modules, 
+-- we explicitly add the script's directory to `package.path`.
 package.path = package.path .. ";" .. currentDir .. "?.lua"
 
 local show = require("showItems")
