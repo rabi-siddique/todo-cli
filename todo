@@ -1,8 +1,10 @@
 #!/usr/bin/env lua
 
-verbose = false
-homeDir = os.getenv("HOME")
-filePath = homeDir .. "/.todos/todos"
+local verbose = false
+local category = nil
+local homeDir = os.getenv("HOME")
+local filePath = homeDir .. "/.todos/todos"
+
 function addItem(item)
     local file, error = io.open(filePath, "a")
 
@@ -14,6 +16,11 @@ function addItem(item)
     local itemToAdd = string.format("%s\n", item)
     file:write(itemToAdd)
     file:close()
+
+    if verbose then
+        print("Todo Category:" .. category)
+    end
+
     print("Todo Added Successfully!")
 end
 
@@ -65,7 +72,7 @@ function showItems()
     local lines = file:lines()
 
     for line in lines do
-        print("- "..line)
+        print("- " .. line)
     end
 
     file:close()
@@ -79,6 +86,10 @@ function main()
     for _, value in ipairs(arg) do
         if value == '--verbose' then
             verbose = true
+        end
+        local pattern = "^%-%-category=.+"
+        if string.match(value, pattern) then
+            category = string.sub(value, #'--category=' + 1)
         end
     end
 
