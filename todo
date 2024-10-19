@@ -13,6 +13,7 @@ package.path = package.path .. ";" .. currentDir .. "?.lua"
 
 local show = require("showItems")
 local edit = require("editItem")
+local remove = require("removeItem")
 local utils = require("utils")
 local verbose = false
 local category = 'None'
@@ -39,42 +40,6 @@ function addItem(item)
     print("Todo Added Successfully!")
 end
 
-function removeItem(deleteId)
-    local file, error = io.open(filePath, "r")
-
-    if error then
-        print("ERROR:", error)
-        return
-    end
-
-    local lines = file:lines()
-    local linesTable = {}
-
-    for line in lines do
-        local lineSplitTable = utils.split(line, ",")
-        local itemId, _, _ = table.unpack(lineSplitTable)
-        if itemId ~= deleteId then
-            table.insert(linesTable, line)
-        end
-    end
-    file:close()
-
-    file, error = io.open(filePath, "w")
-
-    if error then
-        print("ERROR:", error)
-        return
-    end
-
-    for _, line in ipairs(linesTable) do
-        local itemToAdd = string.format("%s\n", line)
-        file:write(itemToAdd)
-    end
-    file:close()
-    print("Todo Removed Successfully")
-
-end
-
 function main()
     local command = arg[1]
 
@@ -99,7 +64,7 @@ function main()
         addItem(item)
     elseif command == "remove" then
         local item = arg[2]
-        removeItem(item)
+        remove.removeItem(filePath, item)
     elseif command == "show" then
         show.showItems(filePath, verbose, category)
     elseif command == "edit" then
