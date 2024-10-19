@@ -14,31 +14,12 @@ package.path = package.path .. ";" .. currentDir .. "?.lua"
 local show = require("showItems")
 local edit = require("editItem")
 local remove = require("removeItem")
-local utils = require("utils")
+local add = require("addItem")
+
 local verbose = false
 local category = 'None'
 local homeDir = os.getenv("HOME")
 local filePath = homeDir .. "/.todos/todos.csv"
-
-function addItem(item)
-    local file, error = io.open(filePath, "a")
-
-    if error then
-        print("ERROR:", error)
-        return
-    end
-
-    local itemID = tostring(os.time())
-    local itemToAdd = string.format("%s,%s,%s\n", itemID, item, category)
-    file:write(itemToAdd)
-    file:close()
-
-    if verbose then
-        print("Todo Category:" .. category)
-    end
-
-    print("Todo Added Successfully!")
-end
 
 function main()
     local command = arg[1]
@@ -61,7 +42,7 @@ function main()
 
     if command == "add" then
         local item = arg[2]
-        addItem(item)
+        add.addItem(filePath, item)
     elseif command == "remove" then
         local item = arg[2]
         remove.removeItem(filePath, item)
