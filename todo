@@ -12,6 +12,7 @@ local currentDir = debug.getinfo(1).source:match("@?(.*/)")
 package.path = package.path .. ";" .. currentDir .. "?.lua"
 
 local show = require("showItems")
+local edit = require("editItem")
 local utils = require("utils")
 local verbose = false
 local category = 'None'
@@ -76,7 +77,6 @@ end
 
 function main()
     local command = arg[1]
-    local item = arg[2]
 
     for _, value in ipairs(arg) do
         if value == '--verbose' then
@@ -95,11 +95,17 @@ function main()
     end
 
     if command == "add" then
+        local item = arg[2]
         addItem(item)
     elseif command == "remove" then
+        local item = arg[2]
         removeItem(item)
     elseif command == "show" then
         show.showItems(filePath, verbose, category)
+    elseif command == "edit" then
+        local itemId = arg[2]
+        local newItemValue = arg[3]
+        edit.editItem(filePath, itemId, newItemValue, category)
     else
         print("Invalid command. Use 'add', 'remove', or 'show'.")
     end
