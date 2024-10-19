@@ -29,13 +29,23 @@ function utils.split(inputString, delimiter)
     return result
 end
 
-function utils.splitStringIntoLines(inputString, width)
+function splitStringIntoLines(inputString, width)
     lines = {}
     for i = 1, #inputString, width do
         local line = inputString:sub(i, i + width - 1)
         table.insert(lines, line)
     end
-    return table.concat(lines, "\n")
+    return lines
+end
+
+function utils.printVerbose(itemId, item, itemCategory)
+    local itemLines = splitStringIntoLines(item, 60)
+
+    print(string.format("%-15s %-60s %-25s", itemId, itemLines[1], itemCategory))
+
+    for i = 2, #itemLines do
+        print(string.format("%-15s %-60s %-25s", "", itemLines[i], ""))
+    end
 end
 
 return utils
