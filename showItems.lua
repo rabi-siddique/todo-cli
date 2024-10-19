@@ -7,7 +7,7 @@ function showByCategory(fileLines, verbose, category)
 
         if itemCategory == category then
             if verbose then
-                print(string.format("%-15s %-60s %-25s", itemId, item, itemCategory))
+                print(string.format("%-15s %-60s %-25s", itemId, utils.splitStringIntoLines(item, 60), itemCategory))
             else
                 print("- " .. item)
             end
@@ -21,7 +21,7 @@ function showAll(fileLines, verbose)
         local itemId, item, itemCategory = table.unpack(utils.split(line, ","))
 
         if verbose then
-            print(string.format("%-15s %-60s %-25s", itemId, item, itemCategory))
+            print(string.format("%-15s %-60s %-25s", itemId, utils.splitStringIntoLines(item, 60), itemCategory))
         else
             print("- " .. item)
         end

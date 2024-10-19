@@ -29,4 +29,13 @@ function utils.split(inputString, delimiter)
     return result
 end
 
+function utils.splitStringIntoLines(inputString, width)
+    lines = {}
+    for i = 1, #inputString, width do
+        local line = inputString:sub(i, i + width - 1)
+        table.insert(lines, line)
+    end
+    return table.concat(lines, "\n")
+end
+
 return utils
