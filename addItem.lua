@@ -1,6 +1,6 @@
 local utils = require("utils")
 local add = {}
-function add.addItem(filePath, item)
+function add.addItem(filePath, item, category)
     local file, error = io.open(filePath, "a")
 
     if error then

@@ -42,8 +42,8 @@ function main()
 
     if command == "add" then
         local item = arg[2]
-        add.addItem(filePath, item)
-    elseif command == "remove" then
+        add.addItem(filePath, item, category)
+    elseif command == "rm" then
         local item = arg[2]
         remove.removeItem(filePath, item)
     elseif command == "show" then
