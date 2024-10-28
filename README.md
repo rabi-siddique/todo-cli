@@ -16,7 +16,7 @@ This command-line tool helps you manage a list of todo items. It allows you to a
 The tool supports three commands:
 
 - `add`: Adds a new todo item.
-- `remove`: Removes an existing todo item.
+- `rm`: Removes an existing todo item.
 - `show`: Displays all current todo items.
 
 ### Adding a Todo Item
@@ -32,7 +32,7 @@ todo add "Your todo item here"
 To remove an item from your todo list, use:
 
 ```bash
-todo remove "Your todo item here"
+todo rm "Your todo item here"
 ```
 
 ### Showing All Todo Items
