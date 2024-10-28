@@ -53,7 +53,7 @@ function main()
         local newItemValue = arg[3]
         edit.editItem(filePath, itemId, newItemValue, category)
     else
-        print("Invalid command. Use 'add', 'remove', or 'show'.")
+        print("Invalid command. Use 'add', 'rm', 'edit' or 'show'.")
     end
 end
 
