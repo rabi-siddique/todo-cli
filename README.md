@@ -13,26 +13,46 @@ This command-line tool helps you manage a list of todo items. It allows you to a
 
 ## Usage
 
-The tool supports three commands:
+The tool supports four commands:
 
-- `add`: Adds a new todo item.
-- `rm`: Removes an existing todo item.
-- `show`: Displays all current todo items.
+- `add`: Adds a new todo item with an optional category.
+- `rm`: Removes an existing todo item by its ID.
+- `show`: Displays all current todo items, optionally filtered by category.
+- `edit`: Edits an existing todo item by its ID.
 
 ### Adding a Todo Item
 
 To add a new item to your todo list, use:
 
 ```bash
-todo add "Your todo item here"
+todo add "Your todo item here" [--category=CategoryName] [--verbose]
+```
+
+- `--category=CategoryName`: Optional argument to specify a category for the todo item.
+- `--verbose`: Optional argument to print additional details about the operation.
+
+For example:
+
+```bash
+todo add "Finish project report" --category=Work --verbose
+
 ```
 
 ### Removing a Todo Item
 
-To remove an item from your todo list, use:
+To remove an item from your todo list by its ID, use:
 
 ```bash
-todo rm "Your todo item here"
+todo rm "ItemID" [--verbose]
+```
+
+- `ItemID`: The unique identifier of the item to be removed.
+- `--verbose`: Optional argument to display more information about the operation.
+
+For example:
+
+```bash
+todo rm 1633015043 --verbose
 ```
 
 ### Showing All Todo Items
@@ -40,7 +60,35 @@ todo rm "Your todo item here"
 To display all the items in your todo list, use:
 
 ```bash
-todo show
+todo show [--category=CategoryName] [--verbose]
+```
+
+- `--category=CategoryName`: Optional argument to filter todos by category.
+- `--verbose`: Optional argument to show detailed information, including item IDs and categories.
+
+For example:
+
+```bash
+todo show --category=Work --verbose
+```
+
+### Editing a Todo Item
+
+To edit an existing item in your todo list, use:
+
+```bash
+todo edit "ItemID" "New todo item description" [--category=NewCategory] [--verbose]
+```
+
+- `ItemID`: The unique identifier of the item to edit.
+- `New todo item description`: The updated description of the todo item.
+- `--category=NewCategory`: Optional argument to update the item's category.
+- `--verbose`: Optional argument to provide additional details.
+
+For example:
+
+```bash
+todo edit "1633015043" "Update project report" --category=Work --verbose
 ```
 
 ### Verbose Mode
@@ -48,7 +96,7 @@ todo show
 The tool also supports a verbose mode which can be activated by appending `--verbose` to any command. This mode provides additional information about the operations performed.
 
 ```bash
-todo add "New item" --verbose
+todo add "Complete daily standup notes" --category=Meetings --verbose
 ```
 
 ### License
