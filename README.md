@@ -46,7 +46,7 @@ To remove an item from your todo list by its ID, use:
 todo rm "ItemID" [--verbose]
 ```
 
-- `ItemID`: The unique identifier of the item to be removed.
+- `ItemID`: The unique identifier of the item to be removed. Use [`todo show`](#showing-all-todo-items) command to get the ID.
 - `--verbose`: Optional argument to display more information about the operation.
 
 For example:
@@ -80,7 +80,7 @@ To edit an existing item in your todo list, use:
 todo edit "ItemID" "New todo item description" [--category=NewCategory] [--verbose]
 ```
 
-- `ItemID`: The unique identifier of the item to edit.
+- `ItemID`: The unique identifier of the item to edit. Use [`todo show`](#showing-all-todo-items) command to get the ID.
 - `New todo item description`: The updated description of the todo item.
 - `--category=NewCategory`: Optional argument to update the item's category.
 - `--verbose`: Optional argument to provide additional details.
